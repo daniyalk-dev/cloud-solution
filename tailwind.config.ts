@@ -8,9 +8,13 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['var(--font-switzer)'],
+        mono: ['var(--font-geist)'],
+      },
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
+        background: "#000",
+        foreground: "#FFF",
       },
     },
   },
