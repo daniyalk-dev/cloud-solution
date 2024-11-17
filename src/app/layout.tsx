@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
+import "./globals.css";
 import localFont from "next/font/local";
 import { Geist } from "next/font/google";
-import "./globals.css";
+import AppContextProvider from "@/components/appContext";
 import Header from "@/components/header";
 
 const switzer = localFont({
@@ -28,10 +29,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${switzer.variable} ${geist.variable}`}>
-      <body className="antialiased">
-        <Header />
-        <main>{children}</main>
-      </body>
+      <AppContextProvider>
+        <body className="antialiased">
+          <Header />
+          <main>{children}</main>
+        </body>
+      </AppContextProvider>
     </html>
   );
 }

@@ -1,9 +1,11 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Logo from "@/assets/images/InNeed-white.png";
 import CTA_Btn from "@/components/ctaBtn";
+import { AppContext } from "@/components/appContext";
+import { AppContextType } from "@/types/common";
 
 const HamburgerIcon = () => (
   <svg
@@ -56,6 +58,7 @@ const CrossIcon = () => (
 );
 
 const Header: React.FC = () => {
+  const { screenWidth } = useContext<AppContextType>(AppContext);
   const menuItems: {
     label: string;
     submenu?: { label: string; href: string }[];
@@ -105,8 +108,16 @@ const Header: React.FC = () => {
   );
 
   useEffect(() => {
-    if (!isMenuOpen) setIsSubMenuOpen(Array(menuItems.length).fill(false));
-  }, [isMenuOpen]);
+    if (screenWidth >= 1024) setIsMenuOpen(false);
+  }, [screenWidth]);
+
+  useEffect(() => {
+    if (isMenuOpen) document.body.classList.add("overflow-y-hidden");
+    else {
+      document.body.classList.remove("overflow-y-hidden");
+      setIsSubMenuOpen(Array(menuItems.length).fill(false));
+    }
+  }, [isMenuOpen, menuItems.length]);
 
   // toggleSubMenu function toggles the open/close state of the submenu at the given index
   const toggleSubMenu = (index: number) => {
@@ -116,18 +127,31 @@ const Header: React.FC = () => {
   };
 
   return (
-    <header className="bg-black">
-      <nav className="container mx-auto px-4 sm:px-8 py-6">
+    <header
+      className={`bg-black w-full top-0 ${
+        isMenuOpen ? "fixed h-screen overflow-y-auto" : "sticky"
+      }`}
+    >
+      <nav className="container mx-auto px-4 sm:px-8 py-6 lg:py-0">
         <div className="flex justify-between items-center">
           <Link href={"/"} aria-label="logo">
-            <Image width={80} height={40} src={Logo} alt="logo" />
+            <Image
+              width={80}
+              height={40}
+              src={Logo}
+              className="lg:w-[144px] lg:h-[60px]"
+              alt="logo"
+            />
           </Link>
-          <button onClick={() => setIsMenuOpen(!isMenuOpen)}>
+          <button
+            className="lg:hidden"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+          >
             {isMenuOpen ? <CrossIcon /> : <HamburgerIcon />}
           </button>
         </div>
         <ul
-          className={`font-mono text-xl min-h-screen overflow-y-auto py-8 text-white uppercase ${
+          className={`font-mono text-xl py-8 text-white uppercase lg:flex ${
             isMenuOpen ? "" : "hidden"
           }`.trim()}
           style={{ wordSpacing: 8 }}
