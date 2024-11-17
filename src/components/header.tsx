@@ -61,6 +61,11 @@ interface MenuItem {
   label: string;
   href: string;
   submenu?: { label: string; href: string }[];
+  imageName?: string;
+}
+
+interface SubMenuImages {
+  [key: number]: string;
 }
 
 const Header: React.FC = () => {
@@ -77,6 +82,7 @@ const Header: React.FC = () => {
         { label: "it consulting services", href: "/it-consulting-services" },
         { label: "managed services", href: "/managed-services" },
       ],
+      imageName: "services-menu.png",
     },
     {
       label: "case studies",
@@ -95,6 +101,7 @@ const Header: React.FC = () => {
         { label: "advisory team", href: "/advisory-team" },
         { label: "technology team", href: "/technology-team" },
       ],
+      imageName: "ourteam-menu.png",
     },
     {
       label: "career",
@@ -114,17 +121,14 @@ const Header: React.FC = () => {
   useEffect(() => {
     if (screenWidth >= 1024) {
       setIsMenuOpen(false);
-      setIsSubMenuOpen(Array(MENU_ITEMS.length).fill(true));
+    } else {
+      if (isMenuOpen) document.body.classList.add("overflow-y-hidden");
+      else {
+        document.body.classList.remove("overflow-y-hidden");
+        setIsSubMenuOpen(Array(MENU_ITEMS.length).fill(false));
+      }
     }
-  }, [screenWidth]);
-
-  useEffect(() => {
-    if (isMenuOpen) document.body.classList.add("overflow-y-hidden");
-    else {
-      document.body.classList.remove("overflow-y-hidden");
-      setIsSubMenuOpen(Array(MENU_ITEMS.length).fill(false));
-    }
-  }, [isMenuOpen, MENU_ITEMS.length]);
+  }, [screenWidth, isMenuOpen, MENU_ITEMS.length]);
 
   // toggleSubMenu function toggles the open/close state of the submenu at the given index
   const toggleSubMenu = (index: number) => {
@@ -134,10 +138,29 @@ const Header: React.FC = () => {
   };
 
   const Menu = ({ isMobile }: { isMobile: boolean }) => {
+    const [subMenuImages, setSubMenuImages] = useState<SubMenuImages>({});
+
+    useEffect(() => {
+      MENU_ITEMS.forEach((item, index) => {
+        if (item.imageName) {
+          import(`@/assets/images/${item.imageName}`)
+            .then((image) => {
+              setSubMenuImages((prevImages: SubMenuImages) => ({
+                ...prevImages,
+                [index]: image.default,
+              }));
+            })
+            .catch((err) => {
+              console.error(err);
+            });
+        }
+      });
+    }, []);
+
     const renderSubMenu = (item: MenuItem, index: number) => {
       if (item.submenu)
         return (
-          <ul className={`${isSubMenuOpen[index] ? "" : "hidden"}`}>
+          <ul className={`${isSubMenuOpen[index] ? "" : "hidden"} lg:block`}>
             {item.submenu.map((subitem, subindex) => (
               <li key={subindex} className="px-4 py-3 lg:px-0 lg:py-0 lg:mb-4">
                 <Link href={subitem.href}>{`- ${subitem.label}`}</Link>
@@ -191,9 +214,11 @@ const Header: React.FC = () => {
             {isMobile
               ? renderSubMenu(item, index)
               : item.submenu && (
-                  <div className="absolute top-10 -translate-x-[40%] bg-black border border-[#c4c7cb] rounded-md p-2 hidden group-hover:flex gap-5 min-w-[60vw] 2xl:min-w-[40vw]">
-                    <div className="bg-slate-500 rounded-md w-28 h-80"></div>
-                    <div className="rounded-md py-3">
+                  <div className="absolute top-10 -translate-x-[40%] bg-black border border-[#c4c7cb] rounded-md p-2 hidden group-hover:grid grid-cols-3 gap-5 min-w-[60vw] 2xl:min-w-[40vw]">
+                    {item.imageName && subMenuImages[index] && (
+                      <Image src={subMenuImages[index]} alt="subMenuImage" />
+                    )}
+                    <div className="rounded-md col-span-2 py-3">
                       {renderSubMenu(item, index)}
                     </div>
                   </div>
