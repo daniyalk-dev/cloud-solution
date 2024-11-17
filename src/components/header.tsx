@@ -29,7 +29,7 @@ const AngleDownIcon = ({ className }: { className: string }) => (
     id="Layer_1"
     width={20}
     height={20}
-    className={className}
+    className={`lg:w-3 lg:h-3 ${className}`}
     fill="#fff"
     viewBox="0 0 24 24"
   >
@@ -59,13 +59,14 @@ const CrossIcon = () => (
 
 const Header: React.FC = () => {
   const { screenWidth } = useContext<AppContextType>(AppContext);
-  const menuItems: {
+  const MENU_ITEMS: {
     label: string;
     submenu?: { label: string; href: string }[];
-    href?: string;
+    href: string;
   }[] = [
     {
       label: "services",
+      href: "/services",
       submenu: [
         { label: "cloud services", href: "/cloud-services" },
         { label: "devops services", href: "/devops-services" },
@@ -85,6 +86,7 @@ const Header: React.FC = () => {
     },
     {
       label: "about us",
+      href: "/about-us",
       submenu: [
         { label: "about inneed", href: "/about-inneed" },
         { label: "executive team", href: "/executive-team" },
@@ -104,7 +106,7 @@ const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   // isSubMenuOpen is an array of boolean values to keep track of the open/close state of each submenu
   const [isSubMenuOpen, setIsSubMenuOpen] = useState<boolean[]>(
-    Array(menuItems.length).fill(false)
+    Array(MENU_ITEMS.length).fill(false)
   );
 
   useEffect(() => {
@@ -115,15 +117,75 @@ const Header: React.FC = () => {
     if (isMenuOpen) document.body.classList.add("overflow-y-hidden");
     else {
       document.body.classList.remove("overflow-y-hidden");
-      setIsSubMenuOpen(Array(menuItems.length).fill(false));
+      setIsSubMenuOpen(Array(MENU_ITEMS.length).fill(false));
     }
-  }, [isMenuOpen, menuItems.length]);
+  }, [isMenuOpen, MENU_ITEMS.length]);
 
   // toggleSubMenu function toggles the open/close state of the submenu at the given index
   const toggleSubMenu = (index: number) => {
     const newIsSubMenuOpen = [...isSubMenuOpen];
     newIsSubMenuOpen[index] = !newIsSubMenuOpen[index];
     setIsSubMenuOpen(newIsSubMenuOpen);
+  };
+
+  const Menu = ({ isMobile }: { isMobile: boolean }) => {
+    return (
+      <ul
+        className={`font-mono text-xl py-8 lg:py-0 text-white uppercase ${
+          isMobile
+            ? isMenuOpen
+              ? "lg:hidden"
+              : "hidden"
+            : "hidden lg:flex lg:items-center lg:justify-center gap-8 lg:text-xs xl:text-base"
+        }`}
+        style={isMobile ? { wordSpacing: 8 } : { wordSpacing: 4 }}
+      >
+        {MENU_ITEMS.map((item, index) => (
+          <li
+            key={index}
+            className={`${index ? "my-6 lg:my-0 lg:py-4" : "lg:py-4"}`}
+          >
+            {isMobile ? (
+              item.submenu ? (
+                <button
+                  className="uppercase flex items-center gap-2"
+                  style={{ wordSpacing: 8 }}
+                  onClick={() => toggleSubMenu(index)}
+                >
+                  {item.label}
+                  <AngleDownIcon
+                    className={isSubMenuOpen[index] ? "rotate-180" : ""}
+                  />
+                </button>
+              ) : (
+                <Link href={item.href}>{item.label}</Link>
+              )
+            ) : item.submenu ? (
+              <Link href={item.href} className="flex items-center gap-2">
+                {item.label}
+                <AngleDownIcon
+                  className={isSubMenuOpen[index] ? "rotate-180" : ""}
+                />
+              </Link>
+            ) : (
+              <Link href={item.href}>{item.label}</Link>
+            )}
+            {item.submenu && (
+              <ul className={`${isSubMenuOpen[index] ? "" : "hidden"}`.trim()}>
+                {item.submenu.map((subitem, subindex) => (
+                  <li key={subindex} className="px-4 py-3">
+                    <Link href={subitem.href}>{`- ${subitem.label}`}</Link>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </li>
+        ))}
+        <li className="my-6 lg:hidden">
+          <CTA_Btn label="Contact Us" href="/contact-us" />
+        </li>
+      </ul>
+    );
   };
 
   return (
@@ -149,46 +211,14 @@ const Header: React.FC = () => {
           >
             {isMenuOpen ? <CrossIcon /> : <HamburgerIcon />}
           </button>
+          <Menu isMobile={false} />
+          <CTA_Btn
+            label="Contact Us"
+            href="/contact-us"
+            className="hidden lg:flex"
+          />
         </div>
-        <ul
-          className={`font-mono text-xl py-8 text-white uppercase lg:flex ${
-            isMenuOpen ? "" : "hidden"
-          }`.trim()}
-          style={{ wordSpacing: 8 }}
-        >
-          {menuItems.map((item, index) => (
-            <li key={index} className={`${index && "my-6 lg:my-0"}`}>
-              {item.href ? (
-                <Link href={item.href}>{item.label}</Link>
-              ) : (
-                <button
-                  className="uppercase flex items-center gap-2"
-                  style={{ wordSpacing: 8 }}
-                  onClick={() => toggleSubMenu(index)}
-                >
-                  {item.label}
-                  <AngleDownIcon
-                    className={isSubMenuOpen[index] ? "rotate-180" : ""}
-                  />
-                </button>
-              )}
-              {!item.href && item.submenu && (
-                <ul
-                  className={`${isSubMenuOpen[index] ? "" : "hidden"}`.trim()}
-                >
-                  {item.submenu.map((subitem, subindex) => (
-                    <li key={subindex} className="px-4 py-3">
-                      <Link href={subitem.href}>{`- ${subitem.label}`}</Link>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </li>
-          ))}
-          <li className="my-6 lg:my-0">
-            <CTA_Btn label="Contact Us" href="/contact-us" />
-          </li>
-        </ul>
+        <Menu isMobile={true} />
       </nav>
     </header>
   );
