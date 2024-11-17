@@ -22,14 +22,14 @@ const HamburgerIcon = () => (
   </svg>
 );
 
-const AngleDownIcon = ({ className }: { className: string }) => (
+const AngleDownIcon = ({ className }: { className?: string }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     xmlSpace="preserve"
     id="Layer_1"
     width={20}
     height={20}
-    className={`lg:w-3 lg:h-3 ${className}`}
+    className={`lg:w-3 lg:h-3 ${className}`.trim()}
     fill="#fff"
     viewBox="0 0 24 24"
   >
@@ -57,13 +57,15 @@ const CrossIcon = () => (
   </svg>
 );
 
+interface MenuItem {
+  label: string;
+  href: string;
+  submenu?: { label: string; href: string }[];
+}
+
 const Header: React.FC = () => {
   const { screenWidth } = useContext<AppContextType>(AppContext);
-  const MENU_ITEMS: {
-    label: string;
-    submenu?: { label: string; href: string }[];
-    href: string;
-  }[] = [
+  const MENU_ITEMS: MenuItem[] = [
     {
       label: "services",
       href: "/services",
@@ -110,7 +112,10 @@ const Header: React.FC = () => {
   );
 
   useEffect(() => {
-    if (screenWidth >= 1024) setIsMenuOpen(false);
+    if (screenWidth >= 1024) {
+      setIsMenuOpen(false);
+      setIsSubMenuOpen(Array(MENU_ITEMS.length).fill(true));
+    }
   }, [screenWidth]);
 
   useEffect(() => {
@@ -129,6 +134,19 @@ const Header: React.FC = () => {
   };
 
   const Menu = ({ isMobile }: { isMobile: boolean }) => {
+    const renderSubMenu = (item: MenuItem, index: number) => {
+      if (item.submenu)
+        return (
+          <ul className={`${isSubMenuOpen[index] ? "" : "hidden"}`}>
+            {item.submenu.map((subitem, subindex) => (
+              <li key={subindex} className="px-4 py-3 lg:px-0 lg:py-0 lg:mb-4">
+                <Link href={subitem.href}>{`- ${subitem.label}`}</Link>
+              </li>
+            ))}
+          </ul>
+        );
+    };
+
     return (
       <ul
         className={`font-mono text-xl py-8 lg:py-0 text-white uppercase ${
@@ -143,7 +161,9 @@ const Header: React.FC = () => {
         {MENU_ITEMS.map((item, index) => (
           <li
             key={index}
-            className={`${index ? "my-6 lg:my-0 lg:py-4" : "lg:py-4"}`}
+            className={`${
+              index ? "my-6 lg:my-0" : ""
+            } group lg:py-4 lg:relative`.trim()}
           >
             {isMobile ? (
               item.submenu ? (
@@ -163,22 +183,21 @@ const Header: React.FC = () => {
             ) : item.submenu ? (
               <Link href={item.href} className="flex items-center gap-2">
                 {item.label}
-                <AngleDownIcon
-                  className={isSubMenuOpen[index] ? "rotate-180" : ""}
-                />
+                <AngleDownIcon />
               </Link>
             ) : (
               <Link href={item.href}>{item.label}</Link>
             )}
-            {item.submenu && (
-              <ul className={`${isSubMenuOpen[index] ? "" : "hidden"}`.trim()}>
-                {item.submenu.map((subitem, subindex) => (
-                  <li key={subindex} className="px-4 py-3">
-                    <Link href={subitem.href}>{`- ${subitem.label}`}</Link>
-                  </li>
-                ))}
-              </ul>
-            )}
+            {isMobile
+              ? renderSubMenu(item, index)
+              : item.submenu && (
+                  <div className="absolute top-10 -translate-x-[40%] bg-black border border-[#c4c7cb] rounded-md p-2 hidden group-hover:flex gap-5 min-w-[60vw] 2xl:min-w-[40vw]">
+                    <div className="bg-slate-500 rounded-md w-28 h-80"></div>
+                    <div className="rounded-md py-3">
+                      {renderSubMenu(item, index)}
+                    </div>
+                  </div>
+                )}
           </li>
         ))}
         <li className="my-6 lg:hidden">
