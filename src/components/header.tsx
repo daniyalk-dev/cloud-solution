@@ -238,14 +238,12 @@ const Header: React.FC = () => {
         isMenuOpen ? "fixed h-screen overflow-y-auto" : "sticky"
       }`}
     >
-      <nav className="container mx-auto px-4 sm:px-8 py-6 lg:py-0">
+      <nav className="container mx-auto px-4 sm:px-8 py-6 lg:py-3">
         <div className="flex justify-between items-center">
           <Link href={"/"} aria-label="logo">
             <Image
-              width={80}
-              height={40}
               src={Logo}
-              className="lg:w-[144px] lg:h-[60px]"
+              className="w-auto h-8 lg:w-36 lg:h-auto"
               alt="logo"
             />
           </Link>

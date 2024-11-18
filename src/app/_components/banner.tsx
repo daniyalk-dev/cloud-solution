@@ -38,14 +38,7 @@ const Banner = () => {
 
   return (
     <section className="relative py-11 lg:py-14 mb-11">
-      <Image
-        src={bgImage}
-        alt="banner-bg"
-        layout="fill"
-        objectFit="cover"
-        className="z-0"
-        priority
-      />
+      <Image src={bgImage} alt="banner-bg" fill className="z-0 object-cover" />
       <div className="relative z-10 container mx-auto px-6 sm:px-10 flex flex-col lg:flex-row gap-7 text-white">
         <div className="flex flex-1 flex-col">
           <div>
@@ -55,19 +48,6 @@ const Banner = () => {
               className="w-auto h-[100px] sm:h-[140px]"
               style={{ animation: "drift 20s infinite" }}
             />
-            <style jsx>{`
-              @keyframes drift {
-                0% {
-                  transform: translateY(0);
-                }
-                50% {
-                  transform: translateY(calc(100% - 90px));
-                }
-                100% {
-                  transform: translateY(0);
-                }
-              }
-            `}</style>
           </div>
           <div className="min-h-[320px] min-[350px]:min-h-[290px] min-[400px]:min-h-[230px] min-[500px]:min-h-[200px] md:min-h-[200px] lg:min-h-[380px] xl:min-h-[400px] 2xl:min-h-[320px]">
             <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold mb-6">
@@ -83,6 +63,19 @@ const Banner = () => {
           <div className="w-[296px] h-[296px] md:w-[496px] md:h-[496px] lg:w-[360px] lg:h-[360px] 2xl:w-[496px] 2xl:h-[496px] rounded-full bg-slate-400 mx-auto"></div>
         </div>
       </div>
+      <style jsx>{`
+        @keyframes drift {
+          0% {
+            transform: translateY(0);
+          }
+          50% {
+            transform: translateY(-40px);
+          }
+          100% {
+            transform: translateY(0);
+          }
+        }
+      `}</style>
     </section>
   );
 };
