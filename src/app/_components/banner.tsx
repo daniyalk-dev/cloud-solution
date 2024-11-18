@@ -15,12 +15,12 @@ const Banner = () => {
       <div className="relative z-10 container mx-auto px-6 sm:px-10 flex flex-col lg:flex-row gap-7 text-white">
         <div className="flex flex-1 flex-col">
           <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold mb-6">
-            Trusted Partner in Cloud Computing
+            {"Trusted Partner in Cloud Computing"}
           </h1>
           <p className="text-base md:text-2xl font-light sm:leading-7 mb-4 sm:mb-16">
-            InNeed is not just a cloud provider; we're your trusted partner to
-            stay at the forefront of technological advancements with Machine
-            learning automatons personalized for your business.
+            {
+              "InNeed is not just a cloud provider; we're your trusted partner to stay at the forefront of technological advancements with Machine learning automatons personalized for your business."
+            }
           </p>
           <CTA_Btn label="our services" href="/" />
         </div>

@@ -1,7 +1,6 @@
 import Image from "next/image";
 import Logo from "@/assets/images/InNeed-blue.png";
 import Link from "next/link";
-import { render } from "react-dom";
 
 interface MenuItem {
   label: string;
