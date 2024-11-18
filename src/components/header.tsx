@@ -234,7 +234,7 @@ const Header: React.FC = () => {
 
   return (
     <header
-      className={`bg-black w-full top-0 ${
+      className={`bg-black w-full top-0 z-50 ${
         isMenuOpen ? "fixed h-screen overflow-y-auto" : "sticky"
       }`}
     >
