@@ -13,8 +13,9 @@ export default {
         mono: ['var(--font-geist)'],
       },
       colors: {
-        background: "#000",
-        foreground: "#FFF",
+        stroke: "#c4c7cB",
+        textPrimary: "#121216",
+        textSecondary: "#313846"
       },
     },
   },

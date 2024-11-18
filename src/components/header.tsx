@@ -214,7 +214,7 @@ const Header: React.FC = () => {
             {isMobile
               ? renderSubMenu(item, index)
               : item.submenu && (
-                  <div className="absolute top-10 -translate-x-[40%] bg-black border border-[#c4c7cb] rounded-md p-2 hidden group-hover:grid grid-cols-3 gap-5 min-w-[60vw] 2xl:min-w-[40vw]">
+                  <div className="absolute top-10 -translate-x-[40%] bg-black border border-stroke rounded-md p-2 hidden group-hover:grid grid-cols-3 gap-5 min-w-[60vw] 2xl:min-w-[40vw]">
                     {item.imageName && subMenuImages[index] && (
                       <Image src={subMenuImages[index]} alt="subMenuImage" />
                     )}
