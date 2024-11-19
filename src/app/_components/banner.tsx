@@ -4,6 +4,7 @@ import bgImage from "@/assets/images/homeHeroBg.png";
 import CTA_Btn from "@/components/ctaBtn";
 import { useEffect, useState } from "react";
 import Logo from "@/assets/images/hero-logo.png";
+import Globe from "@/assets/images/Globe-map.png";
 import AnimatedContent from "./animatedContent";
 
 const Banner = () => {
@@ -72,8 +73,32 @@ const Banner = () => {
           </div>
           <CTA_Btn className="mt-2" label="our services" href="/" />
         </div>
-        <div className="flex-1">
-          <div className="w-[296px] h-[296px] md:w-[496px] md:h-[496px] lg:w-[360px] lg:h-[360px] 2xl:w-[496px] 2xl:h-[496px] rounded-full bg-slate-400 mx-auto"></div>
+        <div className="flex-1 flex items-center">
+          <div className="w-[296px] h-[296px] md:w-[496px] md:h-[496px] lg:w-[360px] lg:h-[360px] 2xl:w-[496px] 2xl:h-[496px] rounded-full bg-slate-400 mx-auto overflow-hidden relative shadow-[0_0_50px_4px_#0267bacc,-20px_-20px_109.6px_28px_#000_inset] after:content-[''] after:absolute after:-top-[60px] after:-inset-x-[15px] after:-bottom-[50px] after:rounded-[260px] after:border-[10px] after:border-black after:shadow-[inset_0_5px_50px_40px_rgba(0,0,0,1)]">
+            <div className="w-[200%] h-full animate-globe">
+              <style jsx>{`
+                @keyframes revolve {
+                  0% {
+                    transform: translateX(0);
+                  }
+                  50% {
+                    transform: translateX(-50%);
+                  }
+                  100% {
+                    transform: translateX(0);
+                  }
+                }
+                .animate-globe {
+                  animation: revolve 30s linear infinite;
+                }
+              `}</style>
+              <Image
+                src={Globe}
+                alt="globe"
+                className="object-cover w-full h-full"
+              />
+            </div>
+          </div>
         </div>
       </div>
     </section>
