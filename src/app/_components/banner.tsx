@@ -4,6 +4,7 @@ import bgImage from "@/assets/images/homeHeroBg.png";
 import CTA_Btn from "@/components/ctaBtn";
 import { useEffect, useState } from "react";
 import Logo from "@/assets/images/hero-logo.png";
+import AnimatedContent from "./animatedContent";
 
 const Banner = () => {
   const CONTENT: { heading: string; desc: string }[] = [
@@ -48,14 +49,26 @@ const Banner = () => {
               className="w-auto h-[100px] sm:h-[140px]"
               style={{ animation: "drift 20s infinite" }}
             />
+            <style jsx>{`
+              @keyframes drift {
+                0% {
+                  transform: translateY(0);
+                }
+                50% {
+                  transform: translateY(-40px);
+                }
+                100% {
+                  transform: translateY(0);
+                }
+              }
+            `}</style>
           </div>
           <div className="min-h-[320px] min-[350px]:min-h-[290px] min-[400px]:min-h-[230px] min-[500px]:min-h-[200px] md:min-h-[200px] lg:min-h-[380px] xl:min-h-[400px] 2xl:min-h-[320px]">
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold mb-6">
-              {CONTENT[currentIndex].heading}
-            </h1>
-            <p className="text-base md:text-2xl font-light sm:leading-7">
-              {CONTENT[currentIndex].desc}
-            </p>
+            <AnimatedContent
+              key={currentIndex}
+              heading={CONTENT[currentIndex].heading}
+              desc={CONTENT[currentIndex].desc}
+            />
           </div>
           <CTA_Btn className="mt-2" label="our services" href="/" />
         </div>
@@ -63,19 +76,6 @@ const Banner = () => {
           <div className="w-[296px] h-[296px] md:w-[496px] md:h-[496px] lg:w-[360px] lg:h-[360px] 2xl:w-[496px] 2xl:h-[496px] rounded-full bg-slate-400 mx-auto"></div>
         </div>
       </div>
-      <style jsx>{`
-        @keyframes drift {
-          0% {
-            transform: translateY(0);
-          }
-          50% {
-            transform: translateY(-40px);
-          }
-          100% {
-            transform: translateY(0);
-          }
-        }
-      `}</style>
     </section>
   );
 };
