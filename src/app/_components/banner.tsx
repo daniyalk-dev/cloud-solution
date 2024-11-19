@@ -39,7 +39,7 @@ const Banner = () => {
   }, [CONTENT.length]); // Dependency array includes contentList.length
 
   return (
-    <section className="relative py-11 lg:py-14 mb-11">
+    <section className="relative py-11 lg:py-16 mb-11">
       <Image src={bgImage} alt="banner-bg" fill className="z-0 object-cover" />
       <div className="relative z-10 container mx-auto px-6 sm:px-10 flex flex-col lg:flex-row gap-7 text-white">
         <div className="flex flex-1 flex-col">

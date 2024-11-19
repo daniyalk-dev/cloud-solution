@@ -14,6 +14,7 @@ export default {
       },
       colors: {
         stroke: "#c4c7cB",
+        bgPrimary: "#1554f5",
         textPrimary: "#121216",
         textSecondary: "#313846"
       },
