@@ -42,7 +42,7 @@ const ProjectList = ({ projects }: { projects: Project[] }) => {
       {projects.map((project, index) => (
         <div
           key={index}
-          className="sticky top-0 mb-2 bg-center bg-cover rounded-xl p-4 sm:p-10 w-full h-[550px]"
+          className="sticky top-0 mb-2 bg-center bg-cover rounded-xl p-4 sm:p-10 w-full h-[550px] lg:h-[500px] xl:h-[475px] 2xl:h-[600px] overflow-hidden"
         >
           {project.bg && bgImages[index] && (
             <div className="absolute w-full h-full top-0 left-0">
@@ -56,7 +56,9 @@ const ProjectList = ({ projects }: { projects: Project[] }) => {
           )}
           <div className="relative z-10 h-full flex flex-col justify-between">
             <div className="mt-5 sm:mt-0">
-              <span className="px-10 py-3">{project.title}</span>
+              <span className="px-10 py-3 rounded-[6px] border border-[rgba(255,255,255,.28)] bg-[rgba(255,255,255,.26)] shadow-[inset_0_0_15px_rgba(0,0,0,0.1)] backdrop-blur-[2.5px]">
+                {project.title}
+              </span>
             </div>
             <div>
               {project.logo && logoImages[index] ? (

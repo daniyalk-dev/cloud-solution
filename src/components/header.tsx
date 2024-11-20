@@ -1,11 +1,13 @@
 "use client";
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 import Link from "next/link";
 import React, { useContext, useEffect, useState } from "react";
 import Logo from "@/assets/images/InNeed-white.png";
 import CTA_Btn from "@/components/ctaBtn";
 import { AppContext } from "@/components/appContext";
 import { AppContextType } from "@/types/common";
+import ServicesImage from "@/assets/images/services-menu.png";
+import OurTeamImage from "@/assets/images/ourteam-menu.png";
 
 const HamburgerIcon = () => (
   <svg
@@ -61,15 +63,11 @@ interface MenuItem {
   label: string;
   href: string;
   submenu?: { label: string; href: string }[];
-  imageName?: string;
-}
-
-interface SubMenuImages {
-  [key: number]: string;
+  image?: StaticImageData;
 }
 
 const Header: React.FC = () => {
-  const { screenWidth } = useContext<AppContextType>(AppContext);
+  const { screenWidth, showHeader } = useContext<AppContextType>(AppContext);
   const MENU_ITEMS: MenuItem[] = [
     {
       label: "services",
@@ -82,7 +80,7 @@ const Header: React.FC = () => {
         { label: "it consulting services", href: "/it-consulting-services" },
         { label: "managed services", href: "/managed-services" },
       ],
-      imageName: "services-menu.png",
+      image: ServicesImage,
     },
     {
       label: "case studies",
@@ -101,7 +99,7 @@ const Header: React.FC = () => {
         { label: "advisory team", href: "/advisory-team" },
         { label: "technology team", href: "/technology-team" },
       ],
-      imageName: "ourteam-menu.png",
+      image: OurTeamImage,
     },
     {
       label: "career",
@@ -138,25 +136,6 @@ const Header: React.FC = () => {
   };
 
   const Menu = ({ isMobile }: { isMobile: boolean }) => {
-    const [subMenuImages, setSubMenuImages] = useState<SubMenuImages>({});
-
-    useEffect(() => {
-      MENU_ITEMS.forEach((item, index) => {
-        if (item.imageName) {
-          import(`@/assets/images/${item.imageName}`)
-            .then((image) => {
-              setSubMenuImages((prevImages: SubMenuImages) => ({
-                ...prevImages,
-                [index]: image.default,
-              }));
-            })
-            .catch((err) => {
-              console.error(err);
-            });
-        }
-      });
-    }, []);
-
     const renderSubMenu = (item: MenuItem, index: number) => {
       if (item.submenu)
         return (
@@ -215,8 +194,8 @@ const Header: React.FC = () => {
               ? renderSubMenu(item, index)
               : item.submenu && (
                   <div className="absolute top-10 -translate-x-[40%] bg-black border border-stroke rounded-md p-2 hidden group-hover:grid grid-cols-3 gap-5 min-w-[60vw] 2xl:min-w-[40vw]">
-                    {item.imageName && subMenuImages[index] && (
-                      <Image src={subMenuImages[index]} alt="subMenuImage" />
+                    {item.image && (
+                      <Image src={item.image} alt={`${item.label} bg`} />
                     )}
                     <div className="rounded-md col-span-2 py-3">
                       {renderSubMenu(item, index)}
@@ -236,7 +215,7 @@ const Header: React.FC = () => {
     <header
       className={`bg-black w-full top-0 z-50 ${
         isMenuOpen ? "fixed h-screen overflow-y-auto" : "sticky"
-      }`}
+      } ${showHeader ? "" : "lg:static"}`.trim()}
     >
       <nav className="container mx-auto px-4 sm:px-8 py-6 lg:py-3">
         <div className="flex justify-between items-center">
