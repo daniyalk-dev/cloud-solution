@@ -1,11 +1,11 @@
 "use client";
-import { Project, ProjectImages } from "@/interfaces/projects";
+import { Project, DynamicImages } from "@/interfaces/common";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 
 const ProjectList = ({ projects }: { projects: Project[] }) => {
-  const [logoImages, setLogoImages] = useState<ProjectImages>({});
-  const [bgImages, setBgImages] = useState<ProjectImages>({});
+  const [logoImages, setLogoImages] = useState<DynamicImages>({});
+  const [bgImages, setBgImages] = useState<DynamicImages>({});
 
   useEffect(() => {
     const getImages = async () => {
@@ -20,11 +20,11 @@ const ProjectList = ({ projects }: { projects: Project[] }) => {
           })
         );
         images.forEach((image, index) => {
-          setLogoImages((prevImages: ProjectImages) => ({
+          setLogoImages((prevImages: DynamicImages) => ({
             ...prevImages,
             [index]: image.logo.default,
           }));
-          setBgImages((prevImages: ProjectImages) => ({
+          setBgImages((prevImages: DynamicImages) => ({
             ...prevImages,
             [index]: image.bg.default,
           }));
