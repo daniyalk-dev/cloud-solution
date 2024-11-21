@@ -2,6 +2,7 @@ import Image from "next/image";
 import DoubleQuotesIcon from "@/assets/images/testimonials/double-quotes.png";
 import { Testimonial } from "@/interfaces/common";
 import TestimonialSlider from "./testimonialSlider";
+import Clients from "./clients";
 
 const Testimonials = () => {
   const TESTIMONIALS: Testimonial[] = [
@@ -37,17 +38,34 @@ const Testimonials = () => {
       },
     },
   ];
+  const CLIENTS_LOGOS: string[] = [
+    "zimmet.png",
+    "quantlio.png",
+    "us-aid.png",
+    "unc.png",
+    "chip.png",
+    "ut-health.png",
+    "augmedix.png",
+    "rave.png",
+    "bbs.png",
+    "sirajganj.png",
+    "icddr-b.png",
+    "homegrown.png",
+  ];
   return (
-    <section className="bg-[#F5F8FF]">
-      <div className="relative container mx-auto px-7 sm:px-8 py-16 md:py-14">
+    <section className="bg-[#F5F8FF] sm:relative">
+      <div className="relative sm:static container mx-auto px-7 sm:px-8 py-16 md:py-14">
         <Image
           src={DoubleQuotesIcon}
           alt="double-quotes"
-          className="w-28 sm:w-32 md:w-36 lg:w-64 absolute top-0"
+          className="w-28 sm:w-32 md:w-36 lg:w-64 absolute top-0 sm:left-6"
         />
-        <div className="flex flex-col gap-10">
+        <div className="relative flex flex-col lg:flex-row gap-10 items-center">
           <div className="flex-1">
             <TestimonialSlider testimonials={TESTIMONIALS} />
+          </div>
+          <div className="flex-1 grid grid-cols-2 sm:grid-cols-3 gap-4">
+            <Clients clientLogos={CLIENTS_LOGOS} />
           </div>
         </div>
       </div>

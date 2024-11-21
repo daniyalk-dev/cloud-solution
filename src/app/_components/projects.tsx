@@ -1,4 +1,4 @@
-import { Project } from "@/interfaces/projects";
+import { Project } from "@/interfaces/common";
 import ProjectList from "./projectList";
 
 const Projects = () => {

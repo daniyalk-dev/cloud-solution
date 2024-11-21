@@ -1,5 +1,7 @@
+import { StaticImageData } from "next/image";
+
 export interface DynamicImages {
-    [key: number]: string;
+    [key: number]: StaticImageData;
 }
 
 export interface Project {

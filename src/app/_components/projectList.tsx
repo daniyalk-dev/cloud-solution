@@ -8,33 +8,29 @@ const ProjectList = ({ projects }: { projects: Project[] }) => {
   const [bgImages, setBgImages] = useState<DynamicImages>({});
 
   useEffect(() => {
-    const getImages = async () => {
-      try {
-        const images = await Promise.all(
-          projects.map(async (project) => {
-            const [logo, bg] = await Promise.all([
-              import(`@/assets/images/projects/${project.logo}`),
-              import(`@/assets/images/projects/${project.bg}`),
-            ]);
-            return { logo, bg };
-          })
-        );
-        images.forEach((image, index) => {
+    projects.forEach((project, index) => {
+      import(`@/assets/images/projects/${project.logo}`)
+        .then((image) => {
           setLogoImages((prevImages: DynamicImages) => ({
             ...prevImages,
-            [index]: image.logo.default,
+            [index]: image.default,
           }));
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+
+      import(`@/assets/images/projects/${project.bg}`)
+        .then((image) => {
           setBgImages((prevImages: DynamicImages) => ({
             ...prevImages,
-            [index]: image.bg.default,
+            [index]: image.default,
           }));
+        })
+        .catch((err) => {
+          console.error(err);
         });
-      } catch (error) {
-        console.error("Error loading images:", error);
-      }
-    };
-
-    getImages();
+    });
   }, [projects]);
 
   return (
@@ -44,7 +40,7 @@ const ProjectList = ({ projects }: { projects: Project[] }) => {
           key={index}
           className="sticky top-0 mb-2 bg-center bg-cover rounded-xl p-4 sm:p-10 w-full h-[550px] lg:h-[500px] xl:h-[475px] 2xl:h-[600px] overflow-hidden"
         >
-          {project.bg && bgImages[index] && (
+          {project.bg && bgImages[index] ? (
             <div className="absolute w-full h-full top-0 left-0">
               <Image
                 src={bgImages[index]}
@@ -53,6 +49,8 @@ const ProjectList = ({ projects }: { projects: Project[] }) => {
                 className="z-0 object-cover"
               />
             </div>
+          ) : (
+            <div className="absolute w-full h-full top-0 left-0 bg-black"></div>
           )}
           <div className="relative z-10 h-full flex flex-col justify-between">
             <div className="mt-5 sm:mt-0">

@@ -1,6 +1,6 @@
 "use client";
-import { DynamicImages, Testimonial } from "@/interfaces/common";
-import Image from "next/image";
+import { Testimonial } from "@/interfaces/common";
+import Image, { StaticImageData } from "next/image";
 import { Fragment, useEffect, useState } from "react";
 
 type Direction = "prev" | "next";
@@ -41,7 +41,7 @@ const TestimonialSlider = ({
   testimonials: Testimonial[];
 }) => {
   const [currentSlide, setCurrentSlide] = useState<number>(0);
-  const [authorImages, setAuthorImages] = useState<DynamicImages>({});
+  const [authorImages, setAuthorImages] = useState<StaticImageData[]>([]);
 
   const handleSlide = (direction: Direction) => {
     if (direction === "prev")
@@ -55,20 +55,21 @@ const TestimonialSlider = ({
   };
 
   useEffect(() => {
-    testimonials.forEach((item, index) => {
-      if (item.author.image) {
-        import(`@/assets/images/testimonials/${item.author.image}`)
-          .then((image) => {
-            setAuthorImages((prevImages: DynamicImages) => ({
-              ...prevImages,
-              [index]: image.default,
-            }));
-          })
-          .catch((err) => {
-            console.error(err);
-          });
+    const getImages = async () => {
+      try {
+        const images = await Promise.all(
+          testimonials.map(
+            (image) =>
+              import(`@/assets/images/testimonials/${image.author.image}`)
+          )
+        );
+        setAuthorImages(images);
+      } catch (error) {
+        console.error("Error loading images:", error);
       }
-    });
+    };
+
+    getImages();
   }, [testimonials]);
 
   return (
@@ -117,7 +118,7 @@ const TestimonialSlider = ({
           );
         })}
       </div>
-      <div className="flex justify-center gap-5 my-[26px] lg:my-[60px]">
+      <div className="flex justify-center gap-5">
         <IndicatorBtn direction="prev" handleSlide={handleSlide} />
         <IndicatorBtn direction="next" handleSlide={handleSlide} />
       </div>
