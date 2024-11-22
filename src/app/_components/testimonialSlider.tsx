@@ -67,7 +67,7 @@ const TestimonialSlider = ({
   }, [testimonials]);
 
   return (
-    <Swiper grabCursor={true} loop={true}>
+    <Swiper grabCursor={true} loop={true} spaceBetween={10}>
       {testimonials.map((testimonial, index) => {
         const {
           summary,
@@ -103,7 +103,7 @@ const TestimonialSlider = ({
           </SwiperSlide>
         );
       })}
-      <div className="flex justify-center gap-5">
+      <div className="flex justify-center gap-5 my-[26px] lg:my-[60px]">
         <IndicatorBtn direction="prev" />
         <IndicatorBtn direction="next" />
       </div>
