@@ -60,11 +60,11 @@ const Testimonials = () => {
           alt="double-quotes"
           className="w-28 sm:w-32 md:w-36 lg:w-64 absolute top-0 sm:left-6"
         />
-        <div className="relative flex flex-col lg:flex-row gap-10 items-center">
-          <div className="flex-1">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+          <div>
             <TestimonialSlider testimonials={TESTIMONIALS} />
           </div>
-          <div className="flex-1 grid grid-cols-2 sm:grid-cols-3 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
             <Clients clientLogos={CLIENTS_LOGOS} />
           </div>
         </div>

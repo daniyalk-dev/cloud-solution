@@ -1,4 +1,7 @@
 "use client";
+import { Swiper, SwiperSlide, useSwiper } from "swiper/react";
+// Import Swiper styles
+import "swiper/css";
 import { Testimonial } from "@/interfaces/common";
 import Image, { StaticImageData } from "next/image";
 import { Fragment, useEffect, useState } from "react";
@@ -18,41 +21,32 @@ const IndicatorIcon = ({ direction }: { direction: Direction }) => (
   </svg>
 );
 
-const IndicatorBtn = ({
-  direction,
-  handleSlide,
-}: {
-  direction: Direction;
-  handleSlide: (direction: Direction) => void;
-}) => (
-  <button
-    className={`px-3 py-2 ${
-      direction === "prev" ? "bg-gradient-to-r " : "bg-gradient-to-l "
-    }from-[#05E8BA] via-[#087EE1] to-[#156FF5] rounded-md`}
-    onClick={() => handleSlide(direction)}
-  >
-    <IndicatorIcon direction={direction} />
-  </button>
-);
+const IndicatorBtn = ({ direction }: { direction: Direction }) => {
+  const swiper = useSwiper();
+
+  const handleSlide = () => {
+    if (direction === "prev") swiper.slidePrev();
+    else swiper.slideNext();
+  };
+
+  return (
+    <button
+      className={`px-3 py-2 ${
+        direction === "prev" ? "bg-gradient-to-r " : "bg-gradient-to-l "
+      }from-[#05E8BA] via-[#087EE1] to-[#156FF5] rounded-md`}
+      onClick={() => handleSlide()}
+    >
+      <IndicatorIcon direction={direction} />
+    </button>
+  );
+};
 
 const TestimonialSlider = ({
   testimonials,
 }: {
   testimonials: Testimonial[];
 }) => {
-  const [currentSlide, setCurrentSlide] = useState<number>(0);
   const [authorImages, setAuthorImages] = useState<StaticImageData[]>([]);
-
-  const handleSlide = (direction: Direction) => {
-    if (direction === "prev")
-      setCurrentSlide((prevSlide) =>
-        prevSlide === 0 ? testimonials.length - 1 : prevSlide - 1
-      );
-    else
-      setCurrentSlide((prevSlide) =>
-        prevSlide === testimonials.length - 1 ? 0 : prevSlide + 1
-      );
-  };
 
   useEffect(() => {
     const getImages = async () => {
@@ -73,56 +67,47 @@ const TestimonialSlider = ({
   }, [testimonials]);
 
   return (
-    <>
-      <div>
-        {testimonials.map((testimonial, index) => {
-          const {
-            summary,
-            author: { name, desc },
-          } = testimonial;
-          return (
-            <div
-              key={index}
-              className={`min-h-[500px] ${
-                currentSlide === index ? "" : "hidden"
-              }`.trim()}
-            >
-              <p className="text-[#747496] text-sm md:text-xl mb-4">
-                {summary}
-              </p>
-              <div className="flex items-center gap-5">
-                {authorImages[index] ? (
-                  <Image
-                    src={authorImages[index]}
-                    alt={name}
-                    className="w-16 h-16 rounded-full object-cover flex-shrink-0"
-                  />
-                ) : (
-                  <div className="w-16 h-16 flex-shrink-0"></div>
-                )}
-                <div>
-                  <div className="text-bgPrimary text-xl sm:text-2xl font-semibold">
-                    {name}
-                  </div>
-                  <div className="text-textSecondary text-base font-normal">
-                    {desc.map((item, index) => (
-                      <Fragment key={index}>
-                        {item}
-                        <br />
-                      </Fragment>
-                    ))}
-                  </div>
+    <Swiper grabCursor={true} loop={true}>
+      {testimonials.map((testimonial, index) => {
+        const {
+          summary,
+          author: { name, desc },
+        } = testimonial;
+        return (
+          <SwiperSlide key={index}>
+            <p className="text-[#747496] text-sm md:text-xl mb-4">{summary}</p>
+            <div className="flex items-center gap-5">
+              {authorImages[index] ? (
+                <Image
+                  src={authorImages[index]}
+                  alt={name}
+                  className="w-16 h-16 rounded-full object-cover flex-shrink-0"
+                />
+              ) : (
+                <div className="w-16 h-16 flex-shrink-0"></div>
+              )}
+              <div>
+                <div className="text-bgPrimary text-xl sm:text-2xl font-semibold">
+                  {name}
+                </div>
+                <div className="text-textSecondary text-base font-normal">
+                  {desc.map((item, index) => (
+                    <Fragment key={index}>
+                      {item}
+                      <br />
+                    </Fragment>
+                  ))}
                 </div>
               </div>
             </div>
-          );
-        })}
-      </div>
+          </SwiperSlide>
+        );
+      })}
       <div className="flex justify-center gap-5">
-        <IndicatorBtn direction="prev" handleSlide={handleSlide} />
-        <IndicatorBtn direction="next" handleSlide={handleSlide} />
+        <IndicatorBtn direction="prev" />
+        <IndicatorBtn direction="next" />
       </div>
-    </>
+    </Swiper>
   );
 };
 
