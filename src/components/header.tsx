@@ -5,7 +5,7 @@ import React, { useContext, useEffect, useState } from "react";
 import Logo from "@/assets/images/InNeed-white.png";
 import CTA_Btn from "@/components/ctaBtn";
 import { AppContext } from "@/components/appContext";
-import { AppContextType } from "@/types/common";
+import { AppContextType, LinkLabel } from "@/interfaces/common";
 import ServicesImage from "@/assets/images/services-menu.png";
 import OurTeamImage from "@/assets/images/ourteam-menu.png";
 
@@ -62,29 +62,26 @@ const CrossIcon = () => (
 interface MenuItem {
   label: string;
   href: string;
-  submenu?: { label: string; href: string }[];
+  submenu?: LinkLabel[];
   image?: StaticImageData;
 }
 
 const Header: React.FC = () => {
-  const { screenWidth, showHeader } = useContext<AppContextType>(AppContext);
+  const { screenWidth, showHeader, SERVICES } =
+    useContext<AppContextType>(AppContext);
   const MENU_ITEMS: MenuItem[] = [
     {
       label: "services",
-      href: "/services",
-      submenu: [
-        { label: "cloud services", href: "/cloud-services" },
-        { label: "devops services", href: "/devops-services" },
-        { label: "development services", href: "/development-services" },
-        { label: "professional services", href: "/professional-services" },
-        { label: "it consulting services", href: "/it-consulting-services" },
-        { label: "managed services", href: "/managed-services" },
-      ],
+      href: SERVICES[0].href,
+      submenu: SERVICES.map((service) => ({
+        label: service.label,
+        href: service.href,
+      })),
       image: ServicesImage,
     },
     {
       label: "case studies",
-      href: "/case-studies",
+      href: "#projects",
     },
     {
       label: "blog",

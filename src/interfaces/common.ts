@@ -1,5 +1,11 @@
 import { StaticImageData } from "next/image";
 
+export interface AppContextType {
+    screenWidth: number;
+    scrollY: number;
+    showHeader: boolean;
+    SERVICES: LinkLabel[]
+};
 export interface DynamicImages {
     [key: number]: StaticImageData;
 }
@@ -20,3 +26,7 @@ export interface Testimonial {
         desc: string[];
     };
 }
+
+export interface LinkLabel {
+    label: string; href: string
+};
