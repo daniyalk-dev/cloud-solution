@@ -5,7 +5,7 @@ const AngleDownIcon = ({ className }: { className?: string }) => (
     id="Layer_1"
     width={20}
     height={20}
-    className={`lg:w-3 lg:h-3 ${className}`.trim()}
+    className={`flex-shrink-0 ${className ?? ""}`.trim()}
     fill="#fff"
     viewBox="0 0 24 24"
   >

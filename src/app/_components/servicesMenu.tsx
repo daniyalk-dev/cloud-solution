@@ -31,7 +31,10 @@ const ServicesMenu = ({ services }: { services: Service[] }) => {
       </div>
       <div className="lg:col-span-9">
         {services.map((service, index) => (
-          <div key={index} className="grid lg:grid-cols-2">
+          <div
+            key={index}
+            className="grid lg:grid-cols-2 lg:gap-12 items-center lg:py-16 lg:min-h-screen"
+          >
             <Image src={service.icon} alt={`${service.label} icon`} />
             <div>
               <h2 className="text-[#070720] font-semibold text-[26px] mb-5 capitalize">
@@ -40,7 +43,7 @@ const ServicesMenu = ({ services }: { services: Service[] }) => {
               {service.subServices.map((subService, subIndex) => (
                 <div key={subIndex} className="mb-2">
                   <button
-                    className={`w-full p-3 text-sm 2xl:text-base flex gap-1 2xl:gap-2 items-center rounded-xl capitalize ${
+                    className={`w-full text-left p-3 text-sm 2xl:text-base flex gap-1 2xl:gap-2 items-center rounded-xl capitalize ${
                       subServicesShow[index][subIndex]
                         ? "bg-bgPrimary text-white"
                         : "bg-[#F3F5F9] text-[#333A4E]"
@@ -58,15 +61,15 @@ const ServicesMenu = ({ services }: { services: Service[] }) => {
                       className={`w-[14px] h-[14px] ${
                         subServicesShow[index][subIndex]
                           ? ""
-                          : "-rotate-90 fill-[#333A4E]"
-                      }`.trim()}
+                          : "-rotate-90 fill-[#333A4E] "
+                      }`}
                     />
                     {subService.title}
                   </button>
                   <div
-                    className={`p-3 text-[#747496] ${
-                      subServicesShow[index][subIndex] ? "" : "hidden"
-                    }`.trim()}
+                    className={`p-3 ${
+                      subServicesShow[index][subIndex] ? "" : "hidden "
+                    }text-[#747496]`}
                   >
                     {subService.desc}
                   </div>

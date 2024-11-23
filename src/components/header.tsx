@@ -158,7 +158,9 @@ const Header: React.FC = () => {
                 >
                   {item.label}
                   <AngleDownIcon
-                    className={isSubMenuOpen[index] ? "rotate-180" : ""}
+                    className={`lg:w-3 lg:h-3 xl:w-4 xl:h-4 ${
+                      isSubMenuOpen[index] ? "rotate-180" : ""
+                    }`}
                   />
                 </button>
               ) : (
@@ -167,7 +169,7 @@ const Header: React.FC = () => {
             ) : item.submenu ? (
               <Link href={item.href} className="flex items-center gap-2">
                 {item.label}
-                <AngleDownIcon />
+                <AngleDownIcon className="lg:w-3 lg:h-3 xl:w-4 xl:h-4" />
               </Link>
             ) : (
               <Link href={item.href}>{item.label}</Link>
