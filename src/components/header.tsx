@@ -1,5 +1,6 @@
 "use client";
 import Image, { StaticImageData } from "next/image";
+import AngleDownIcon from "@/assets/images/AngleDownIcon";
 import Link from "next/link";
 import React, { useContext, useEffect, useState } from "react";
 import Logo from "@/assets/images/InNeed-white.png";
@@ -21,26 +22,6 @@ const HamburgerIcon = () => (
       fill="#fff"
       d="M5.5 7.75a.75.75 0 0 0 0 1.5v-1.5Zm14 1.5a.75.75 0 0 0 0-1.5v1.5Zm-14 2.5a.75.75 0 0 0 0 1.5v-1.5Zm12 1.5a.75.75 0 0 0 0-1.5v1.5Zm-12 2.5a.75.75 0 0 0 0 1.5v-1.5Zm7 1.5a.75.75 0 0 0 0-1.5v1.5Zm-7-8h14v-1.5h-14v1.5Zm0 4h12v-1.5h-12v1.5Zm0 4h7v-1.5h-7v1.5Z"
     />
-  </svg>
-);
-
-const AngleDownIcon = ({ className }: { className?: string }) => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    xmlSpace="preserve"
-    id="Layer_1"
-    width={20}
-    height={20}
-    className={`lg:w-3 lg:h-3 ${className}`.trim()}
-    fill="#fff"
-    viewBox="0 0 24 24"
-  >
-    <g id="SVGRepo_iconCarrier">
-      <style>{".st0{fill:none}"}</style>
-      <path d="M3.7 7.8 2.3 9.2l9 9 .7.7.7-.7 9-9-1.4-1.4-8.3 8.3-8.3-8.3z" />
-      <path d="M0 0h24v24H0z" className="st0" />
-      <path d="M0 0h24v24H0z" className="st0" />
-    </g>
   </svg>
 );
 
@@ -67,16 +48,20 @@ interface MenuItem {
 }
 
 const Header: React.FC = () => {
-  const { screenWidth, showHeader, SERVICES } =
-    useContext<AppContextType>(AppContext);
+  const { screenWidth, showHeader } = useContext<AppContextType>(AppContext);
   const MENU_ITEMS: MenuItem[] = [
     {
       label: "services",
-      href: SERVICES[0].href,
-      submenu: SERVICES.map((service) => ({
-        label: service.label,
-        href: service.href,
-      })),
+      href: "#cloud-services",
+      submenu: [
+        { label: "cloud services", href: "#cloud-services" },
+        { label: "devOps services", href: "#devops-services" },
+        { label: "design services", href: "#design-services" },
+        { label: "development services", href: "#development-services" },
+        { label: "professional services", href: "#professional-services" },
+        { label: "it consulting services", href: "#it-consulting-services" },
+        { label: "managed services", href: "#managed-services" },
+      ],
       image: ServicesImage,
     },
     {

@@ -4,7 +4,6 @@ export interface AppContextType {
     screenWidth: number;
     scrollY: number;
     showHeader: boolean;
-    SERVICES: LinkLabel[]
 };
 export interface DynamicImages {
     [key: number]: StaticImageData;
@@ -30,3 +29,11 @@ export interface Testimonial {
 export interface LinkLabel {
     label: string; href: string
 };
+
+export interface Service extends LinkLabel {
+    icon: StaticImageData;
+    subServices: {
+        title: string;
+        desc: string;
+    }[];
+}

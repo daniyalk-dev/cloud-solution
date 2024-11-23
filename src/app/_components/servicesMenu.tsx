@@ -1,18 +1,22 @@
 "use client";
-import { useContext } from "react";
-import { AppContext } from "@/components/appContext";
 import Link from "next/link";
+import { Service } from "@/interfaces/common";
+import Image from "next/image";
+import AngleDownIcon from "@/assets/images/AngleDownIcon";
+import { useState } from "react";
 
-const ServicesMenu = () => {
-  const { SERVICES } = useContext(AppContext);
+const ServicesMenu = ({ services }: { services: Service[] }) => {
+  const [subServicesShow, setSubServicesShow] = useState<boolean[][]>(
+    services.map((service) => Array(service.subServices.length).fill(false))
+  );
   return (
     <>
-      <div className="lg:col-span-3 h-screen flex flex-col justify-center items-start pt-12 pb-12 sticky top-0">
+      <div className="hidden lg:col-span-3 h-screen lg:flex flex-col justify-center items-start pt-12 pb-12 sticky top-0">
         <div className="mb-5 text-[#1554F5] text-2xl font-medium">
           We can build it for you.
         </div>
         <ul>
-          {SERVICES.map((service, index) => (
+          {services.map((service, index) => (
             <li
               key={index}
               className="text-xl sm:text-[26px] mb-4 opacity-60 capitalize"
@@ -25,7 +29,53 @@ const ServicesMenu = () => {
           ))}
         </ul>
       </div>
-      <div className="lg:col-span-9"></div>
+      <div className="lg:col-span-9">
+        {services.map((service, index) => (
+          <div key={index} className="grid lg:grid-cols-2">
+            <Image src={service.icon} alt={`${service.label} icon`} />
+            <div>
+              <h2 className="text-[#070720] font-semibold text-[26px] mb-5 capitalize">
+                {service.label}
+              </h2>
+              {service.subServices.map((subService, subIndex) => (
+                <div key={subIndex} className="mb-2">
+                  <button
+                    className={`w-full p-3 text-sm 2xl:text-base flex gap-1 2xl:gap-2 items-center rounded-xl capitalize ${
+                      subServicesShow[index][subIndex]
+                        ? "bg-bgPrimary text-white"
+                        : "bg-[#F3F5F9] text-[#333A4E]"
+                    }`}
+                    onClick={() => {
+                      const temp = [...subServicesShow];
+                      temp[index] = Array(service.subServices.length).fill(
+                        false
+                      );
+                      temp[index][subIndex] = !subServicesShow[index][subIndex];
+                      setSubServicesShow(temp);
+                    }}
+                  >
+                    <AngleDownIcon
+                      className={`w-[14px] h-[14px] ${
+                        subServicesShow[index][subIndex]
+                          ? ""
+                          : "-rotate-90 fill-[#333A4E]"
+                      }`.trim()}
+                    />
+                    {subService.title}
+                  </button>
+                  <div
+                    className={`p-3 text-[#747496] ${
+                      subServicesShow[index][subIndex] ? "" : "hidden"
+                    }`.trim()}
+                  >
+                    {subService.desc}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
     </>
   );
 };
