@@ -12,7 +12,7 @@ const Services = () => {
   const SERVICES: Service[] = [
     {
       label: "cloud services",
-      href: "#cloud-services",
+      href: "/#cloud-services",
       icon: CloudServicesIcon,
       subServices: [
         {
@@ -51,7 +51,7 @@ const Services = () => {
     },
     {
       label: "devOps services",
-      href: "#devops-services",
+      href: "/#devops-services",
       icon: DevOpsServicesIcon,
       subServices: [
         {
@@ -78,7 +78,7 @@ const Services = () => {
     },
     {
       label: "design services",
-      href: "#design-services",
+      href: "/#design-services",
       icon: DesignServicesIcon,
       subServices: [
         {
@@ -109,7 +109,7 @@ const Services = () => {
     },
     {
       label: "development services",
-      href: "#development-services",
+      href: "/#development-services",
       icon: DevServicesIcon,
       subServices: [
         {
@@ -128,7 +128,7 @@ const Services = () => {
     },
     {
       label: "professional services",
-      href: "#professional-services",
+      href: "/#professional-services",
       icon: ProServicesIcon,
       subServices: [
         {
@@ -159,7 +159,7 @@ const Services = () => {
     },
     {
       label: "IT consulting services",
-      href: "#it-consulting-services",
+      href: "/#it-consulting-services",
       icon: ITConsultingServicesIcon,
       subServices: [
         {
@@ -182,7 +182,7 @@ const Services = () => {
     },
     {
       label: "managed services",
-      href: "#managed-services",
+      href: "/#managed-services",
       icon: ManagedServicesIcon,
       subServices: [
         {

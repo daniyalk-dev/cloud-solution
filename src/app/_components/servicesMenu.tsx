@@ -25,7 +25,7 @@ const ServicesMenu = ({ services }: { services: Service[] }) => {
       observerRef.current = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
-            if (entry.isIntersecting) setActiveLink("#" + entry.target.id);
+            if (entry.isIntersecting) setActiveLink("/#" + entry.target.id);
           });
         },
         {
@@ -74,7 +74,7 @@ const ServicesMenu = ({ services }: { services: Service[] }) => {
         {services.map((service, index) => (
           <div
             key={index}
-            id={service.href.slice(1)}
+            id={service.href.slice(2)}
             ref={(el) => {
               if (el) serviceRefs.current[service.href] = el;
             }}
