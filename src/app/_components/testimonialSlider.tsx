@@ -75,7 +75,9 @@ const TestimonialSlider = ({
         } = testimonial;
         return (
           <SwiperSlide key={index}>
-            <p className="text-[#747496] text-sm md:text-xl mb-4">{summary}</p>
+            <p className="text-paraPrimary text-sm md:text-xl mb-4">
+              {summary}
+            </p>
             <div className="flex items-center gap-5">
               {authorImages[index] ? (
                 <Image

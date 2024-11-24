@@ -16,7 +16,9 @@ export default {
         stroke: "#c4c7cB",
         bgPrimary: "#1554f5",
         textPrimary: "#121216",
-        textSecondary: "#313846"
+        textSecondary: "#313846",
+        headingPrimary: "#070720",
+        paraPrimary: "#747496"
       },
     },
   },

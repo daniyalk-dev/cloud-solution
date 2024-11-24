@@ -52,7 +52,7 @@ const Header: React.FC = () => {
   const MENU_ITEMS: MenuItem[] = [
     {
       label: "services",
-      href: "#cloud-services",
+      href: "/#cloud-services",
       submenu: [
         { label: "cloud services", href: "/#cloud-services" },
         { label: "devOps services", href: "/#devops-services" },
@@ -66,7 +66,7 @@ const Header: React.FC = () => {
     },
     {
       label: "case studies",
-      href: "#projects",
+      href: "/#projects",
     },
     {
       label: "blog",

@@ -86,7 +86,7 @@ const ServicesMenu = ({ services }: { services: Service[] }) => {
               className="pr-8"
             />
             <div>
-              <h2 className="text-[#070720] font-semibold text-[26px] mb-5 capitalize">
+              <h2 className="text-headingPrimary font-semibold text-[26px] mb-5 capitalize">
                 {service.label}
               </h2>
               {service.subServices.map((subService, subIndex) => (
@@ -118,7 +118,7 @@ const ServicesMenu = ({ services }: { services: Service[] }) => {
                   <div
                     className={`p-3 ${
                       subServicesShow[index][subIndex] ? "" : "hidden "
-                    }text-[#747496]`}
+                    }text-paraPrimary`}
                   >
                     {subService.desc}
                   </div>

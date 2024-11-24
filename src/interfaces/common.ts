@@ -37,3 +37,10 @@ export interface Service extends LinkLabel {
         desc: string;
     }[];
 }
+
+export interface TitleDescription {
+    id: string;
+    title: string;
+    description: string;
+    image: StaticImageData;
+}
