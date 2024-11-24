@@ -1,23 +1,12 @@
 "use client";
 import Image from "next/image";
 import RowTogether from "@/assets/images/about/row-together.png";
-import { useEffect, useRef, useState } from "react";
+import useIntersectionObserver from "@/components/intersectionObserver";
+import { useRef } from "react";
 
 const Story = () => {
-  const imageRef = useRef<HTMLImageElement>(null);
-  const [isVisible, setIsVisible] = useState<boolean>(false);
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => (entry.isIntersecting ? setIsVisible(true) : null),
-      { threshold: 0.5 }
-    );
-
-    if (imageRef.current) observer.observe(imageRef.current);
-
-    return () => {
-      if (imageRef.current) observer.unobserve(imageRef.current);
-    };
-  }, []);
+  const imgRef = useRef<HTMLImageElement>(null);
+  const isVisible = useIntersectionObserver(imgRef);
   return (
     <section className="container mx-auto my-8 sm:my-16 md:my-20 xl:my-40 px-4 sm:px-8">
       <div className="grid xl:grid-cols-2 gap-0 xl:gap-20">
@@ -47,7 +36,7 @@ const Story = () => {
           </p>
         </div>
         <Image
-          ref={imageRef}
+          ref={imgRef}
           src={RowTogether}
           alt="Row Together"
           className={`w-full transition-all duration-1000 ease ${

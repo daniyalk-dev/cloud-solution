@@ -1,11 +1,17 @@
+"use client";
 import Image from "next/image";
 import { TitleDescription } from "@/interfaces/common";
+import useIntersectionObserver from "@/components/intersectionObserver";
+import { useRef } from "react";
 
 const ContentImage = ({ data }: { data: TitleDescription }) => {
   const { id, title, description, image } = data;
+  const sectionRef = useRef<HTMLElement>(null);
+  const isVisible = useIntersectionObserver(sectionRef);
   return (
     <section
       id={id}
+      ref={sectionRef}
       className="container mx-auto px-4 sm:px-12 lg:px-24 my-10 sm:my-16 md:my-20 xl:my-32"
     >
       <div className="grid lg:grid-cols-2 gap-y-8 gap-20 items-center">
@@ -20,7 +26,9 @@ const ContentImage = ({ data }: { data: TitleDescription }) => {
         <Image
           src={image}
           alt="Vision"
-          className={`${id === "vision" ? "lg:order-1" : ""}`.trim()}
+          className={`transition-all duration-1000${
+            isVisible ? "" : " scale-[.6] opacity-0"
+          } ${id === "vision" ? "lg:order-1" : ""}`.trim()}
         />
       </div>
     </section>
