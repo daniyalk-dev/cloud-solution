@@ -124,7 +124,10 @@ const Header: React.FC = () => {
           <ul className={`${isSubMenuOpen[index] ? "" : "hidden"} lg:block`}>
             {item.submenu.map((subitem, subindex) => (
               <li key={subindex} className="px-4 py-3 lg:px-0 lg:py-0 lg:mb-4">
-                <Link href={subitem.href}>{`- ${subitem.label}`}</Link>
+                <Link
+                  href={subitem.href}
+                  onClick={() => setIsMenuOpen(false)}
+                >{`- ${subitem.label}`}</Link>
               </li>
             ))}
           </ul>
@@ -164,7 +167,9 @@ const Header: React.FC = () => {
                   />
                 </button>
               ) : (
-                <Link href={item.href}>{item.label}</Link>
+                <Link href={item.href} onClick={() => setIsMenuOpen(false)}>
+                  {item.label}
+                </Link>
               )
             ) : item.submenu ? (
               <Link href={item.href} className="flex items-center gap-2">

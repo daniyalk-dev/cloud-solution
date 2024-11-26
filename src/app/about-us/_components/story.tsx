@@ -6,7 +6,7 @@ import { useRef } from "react";
 
 const Story = () => {
   const imgRef = useRef<HTMLImageElement>(null);
-  const isVisible = useIntersectionObserver(imgRef);
+  const isVisible = useIntersectionObserver([imgRef], true)[0];
   return (
     <section className="container mx-auto my-8 sm:my-16 md:my-20 xl:my-40 px-4 sm:px-8">
       <div className="grid xl:grid-cols-2 gap-0 xl:gap-20">

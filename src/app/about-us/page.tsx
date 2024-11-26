@@ -4,6 +4,7 @@ import Vision from "@/assets/images/about/vision.png";
 import Mission from "@/assets/images/about/mission.png";
 import { TitleDescription } from "@/interfaces/common";
 import ContentImage from "./_components/contentImage";
+import Values from "./_components/values";
 
 const AboutUs = () => {
   const VISION: TitleDescription = {
@@ -28,6 +29,7 @@ const AboutUs = () => {
       <Story />
       <ContentImage data={VISION} />
       <ContentImage data={MISSION} />
+      <Values />
     </>
   );
 };

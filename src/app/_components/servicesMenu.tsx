@@ -16,12 +16,12 @@ const ServicesMenu = ({ services }: { services: Service[] }) => {
   const [activeLink, setActiveLink] = useState<string>(services[0].href);
 
   useEffect(() => {
-    if (screenWidth >= 1024) {
-      if (observerRef.current) {
-        // Disconnect the previous observer if it exists
-        observerRef.current.disconnect();
-      }
+    if (observerRef.current) {
+      // Disconnect the previous observer if it exists
+      observerRef.current.disconnect();
+    }
 
+    if (screenWidth >= 1024) {
       observerRef.current = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
@@ -39,11 +39,11 @@ const ServicesMenu = ({ services }: { services: Service[] }) => {
         const div = serviceRefs.current[key];
         if (div) observerRef.current.observe(div);
       }
-
-      return () => {
-        if (observerRef.current) observerRef.current.disconnect();
-      };
     }
+
+    return () => {
+      if (observerRef.current) observerRef.current.disconnect();
+    };
   }, [screenWidth]);
 
   return (

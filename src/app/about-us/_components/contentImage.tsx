@@ -7,7 +7,7 @@ import { useRef } from "react";
 const ContentImage = ({ data }: { data: TitleDescription }) => {
   const { id, title, description, image } = data;
   const sectionRef = useRef<HTMLElement>(null);
-  const isVisible = useIntersectionObserver(sectionRef);
+  const isVisible = useIntersectionObserver([sectionRef], true)[0];
   return (
     <section
       id={id}
