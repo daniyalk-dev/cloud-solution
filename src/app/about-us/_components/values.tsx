@@ -8,7 +8,7 @@ import InnovationIcon from "@/assets/images/about/innovation.png";
 import IntegrityIcon from "@/assets/images/about/integrity.png";
 import SustainabilityIcon from "@/assets/images/about/sustainability.png";
 import { createRef, RefObject, useRef } from "react";
-import useIntersectionObserver from "@/components/intersectionObserver";
+import useIntersectionObserver from "@/custom-hooks/intersectionObserver";
 
 const Values = () => {
   const VALUES: { title: string; desc: string; image: StaticImageData }[] = [

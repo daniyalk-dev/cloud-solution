@@ -10,7 +10,6 @@ const useIntersectionObserver = (
   );
 
   useEffect(() => {
-    console.log("revealOnce:", revealOnce);
     const observer = new IntersectionObserver(
       (entries) => {
         setVisibility((prevVisibility) => {

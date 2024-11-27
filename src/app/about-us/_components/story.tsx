@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import RowTogether from "@/assets/images/about/row-together.png";
-import useIntersectionObserver from "@/components/intersectionObserver";
+import useIntersectionObserver from "@/custom-hooks/intersectionObserver";
 import { useRef } from "react";
 
 const Story = () => {

@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import { TitleDescription } from "@/interfaces/common";
-import useIntersectionObserver from "@/components/intersectionObserver";
+import useIntersectionObserver from "@/custom-hooks/intersectionObserver";
 import { useRef } from "react";
 
 const ContentImage = ({ data }: { data: TitleDescription }) => {

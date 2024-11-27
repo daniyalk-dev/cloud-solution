@@ -76,10 +76,10 @@ const Header: React.FC = () => {
       label: "about us",
       href: "/about-us",
       submenu: [
-        { label: "about inneed", href: "/about-inneed" },
-        { label: "executive team", href: "/executive-team" },
-        { label: "advisory team", href: "/advisory-team" },
-        { label: "technology team", href: "/technology-team" },
+        { label: "about inneed", href: "/about-us" },
+        { label: "executive team", href: "/about-us/#executive-team" },
+        { label: "advisory team", href: "/about-us/#advisory-team" },
+        { label: "technology team", href: "/about-us/#technology-team" },
       ],
       image: OurTeamImage,
     },
@@ -123,7 +123,14 @@ const Header: React.FC = () => {
         return (
           <ul className={`${isSubMenuOpen[index] ? "" : "hidden"} lg:block`}>
             {item.submenu.map((subitem, subindex) => (
-              <li key={subindex} className="px-4 py-3 lg:px-0 lg:py-0 lg:mb-4">
+              <li
+                key={subindex}
+                className={`px-4 py-3 lg:px-0 lg:py-0${
+                  !isMobile && item.href === "/about-us" && subindex === 0
+                    ? " hidden"
+                    : ""
+                } lg:mb-4`}
+              >
                 <Link
                   href={subitem.href}
                   onClick={() => setIsMenuOpen(false)}

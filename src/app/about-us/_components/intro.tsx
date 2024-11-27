@@ -1,6 +1,6 @@
 "use client";
 import CTA_Btn from "@/components/ctaBtn";
-import useIntersectionObserver from "@/components/intersectionObserver";
+import useIntersectionObserver from "@/custom-hooks/intersectionObserver";
 import { useRef } from "react";
 
 const Intro = () => {
