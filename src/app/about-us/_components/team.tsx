@@ -2,8 +2,9 @@
 import { Team } from "@/interfaces/about-us";
 import { DynamicImages } from "@/interfaces/common";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { createRef, RefObject, useRef, useState, useEffect } from "react";
 import LinkedInIcon from "@/assets/images/linkedin white.png";
+import useIntersectionObserver from "@/custom-hooks/intersectionObserver";
 
 interface TeamImages {
   [key: string]: DynamicImages;
@@ -12,6 +13,20 @@ interface TeamImages {
 const TeamSection = ({ data }: { data: Team[] }) => {
   const [activeTeam, setActiveTeam] = useState<string>(data[0].title);
   const [memberImages, setMemberImages] = useState<TeamImages>({});
+
+  const teamMemberRefs = useRef(
+    data.reduce((acc, team) => {
+      acc[team.title] = team.members.map(() => createRef<HTMLDivElement>());
+      return acc;
+    }, {} as { [key: string]: RefObject<HTMLDivElement>[] })
+  );
+
+  const visibilityMap = Object.fromEntries(
+    Object.entries(teamMemberRefs.current).map(([team, refs]) => [
+      team,
+      useIntersectionObserver(refs, true),
+    ])
+  );
 
   useEffect(() => {
     data.forEach((team) => {
@@ -32,7 +47,7 @@ const TeamSection = ({ data }: { data: Team[] }) => {
           });
       });
     });
-  }, []);
+  }, [data.length]);
 
   return (
     <section className="container mx-auto px-4 sm:px-8 my-16 sm:my-24 md:py-30">
@@ -67,7 +82,7 @@ const TeamSection = ({ data }: { data: Team[] }) => {
           }`.trim()}
         >
           {team.members.map((member, i) => (
-            <div key={i}>
+            <div key={i} ref={teamMemberRefs.current[team.title][i]}>
               {memberImages[team.title] && memberImages[team.title][i] && (
                 <>
                   <div className="relative group rounded-lg overflow-hidden mb-3 sm:mb-6">
