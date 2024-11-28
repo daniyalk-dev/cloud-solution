@@ -9,6 +9,7 @@ export interface TitleDescription {
 
 export interface Team {
     title: string;
+    href: string,
     members: {
         name: string;
         image: string;

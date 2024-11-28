@@ -27,6 +27,7 @@ const AboutUs = () => {
   const TEAMS: Team[] = [
     {
       title: "executive team",
+      href: "#executive-team",
       members: [
         {
           name: "Shamim Ashrafi",
@@ -61,6 +62,7 @@ const AboutUs = () => {
     },
     {
       title: "advisory team",
+      href: "#advisory-team",
       members: [
         {
           name: "Dr. Javed Mostafa",
@@ -80,6 +82,7 @@ const AboutUs = () => {
     },
     {
       title: "technology team",
+      href: "#technology-team",
       members: [
         {
           name: "Shah Jafar Ulla Hamidi",
