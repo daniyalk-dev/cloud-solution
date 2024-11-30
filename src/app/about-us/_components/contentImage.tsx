@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { TitleDescription } from "@/interfaces/common";
+import { TitleDescription } from "@/interfaces/about-us";
 import useIntersectionObserver from "@/custom-hooks/intersectionObserver";
 import { useRef } from "react";
 

@@ -6,7 +6,6 @@ import { createRef, RefObject, useRef, useState, useEffect } from "react";
 import LinkedInIcon from "@/assets/images/linkedin white.png";
 import useIntersectionObserver from "@/custom-hooks/intersectionObserver";
 import clsx from "clsx";
-import { usePathname } from "next/navigation";
 
 interface TeamImages {
   [key: string]: DynamicImages;
@@ -15,7 +14,6 @@ interface TeamImages {
 const TeamSection = ({ data }: { data: Team[] }) => {
   const [activeTeam, setActiveTeam] = useState<string>(data[0].href);
   const [memberImages, setMemberImages] = useState<TeamImages>({});
-  const pathname = usePathname();
   const mainRef = useRef<HTMLDivElement>(null);
   const teamMemberRefs = useRef(
     data.reduce((acc, team) => {
