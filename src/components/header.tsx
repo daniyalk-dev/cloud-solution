@@ -43,6 +43,7 @@ const CrossIcon = () => (
 interface MenuItem {
   label: string;
   href: string;
+  external?: boolean;
   submenu?: LinkLabel[];
   image?: StaticImageData;
 }
@@ -70,7 +71,7 @@ const Header: React.FC = () => {
     },
     {
       label: "blog",
-      href: "/blog",
+      href: "/",
     },
     {
       label: "about us",
@@ -94,11 +95,13 @@ const Header: React.FC = () => {
     },
     {
       label: "career",
-      href: "/career",
+      href: "https://pk.indeed.com/",
+      external: true,
     },
     {
       label: "aws",
-      href: "/aws",
+      href: "https://www.linkedin.com/company/amazon-web-services/",
+      external: true,
     },
   ];
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
@@ -142,6 +145,7 @@ const Header: React.FC = () => {
               >
                 <Link
                   href={subitem.href}
+                  target={item.external ? "_blank" : "_self"}
                   onClick={() => setIsMenuOpen(false)}
                 >{`- ${subitem.label}`}</Link>
               </li>
@@ -183,17 +187,30 @@ const Header: React.FC = () => {
                   />
                 </button>
               ) : (
-                <Link href={item.href} onClick={() => setIsMenuOpen(false)}>
+                <Link
+                  href={item.href}
+                  target={item.external ? "_blank" : "_self"}
+                  onClick={() => setIsMenuOpen(false)}
+                >
                   {item.label}
                 </Link>
               )
             ) : item.submenu ? (
-              <Link href={item.href} className="flex items-center gap-2">
+              <Link
+                href={item.href}
+                className="flex items-center gap-2"
+                target={item.external ? "_blank" : "_self"}
+              >
                 {item.label}
                 <AngleDownIcon className="lg:w-3 lg:h-3 xl:w-4 xl:h-4" />
               </Link>
             ) : (
-              <Link href={item.href}>{item.label}</Link>
+              <Link
+                href={item.href}
+                target={item.external ? "_blank" : "_self"}
+              >
+                {item.label}
+              </Link>
             )}
             {isMobile
               ? renderSubMenu(item, index)
@@ -210,7 +227,11 @@ const Header: React.FC = () => {
           </li>
         ))}
         <li className="my-6 lg:hidden">
-          <CTA_Btn label="Contact Us" href="/contact-us" />
+          <CTA_Btn
+            label="Contact Us"
+            href="/contact-us"
+            onClick={() => setIsMenuOpen(false)}
+          />
         </li>
       </ul>
     );

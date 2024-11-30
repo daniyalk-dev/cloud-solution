@@ -17,15 +17,18 @@ const CTA_Btn = ({
   label,
   className,
   href,
+  onClick,
 }: {
   label: string;
   className?: string;
   href: string;
+  onClick?: () => void;
 }) => {
   return (
     <Link
       className={`flex items-center gap-2 w-fit capitalize px-4 py-2 text-white rounded-full bg-gradient-to-r from-[#156FF5] via-[#087EE1] to-[#05E8BA] hover:bg-gradient-to-l ${className}`}
       href={href}
+      onClick={onClick}
     >
       {label}
       <ArrowIcon />
