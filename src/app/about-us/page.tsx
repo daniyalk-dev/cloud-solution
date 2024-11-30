@@ -5,7 +5,7 @@ import Mission from "@/assets/images/about/mission.png";
 import { TitleDescription, Team } from "@/interfaces/about-us";
 import ContentImage from "./_components/contentImage";
 import Values from "./_components/values";
-import TeamSection from "./_components/team";
+import TeamSectionWrapper from "./_components/teamSectionWrapper";
 
 const AboutUs = () => {
   const VISION: TitleDescription = {
@@ -110,7 +110,7 @@ const AboutUs = () => {
       <ContentImage data={VISION} />
       <ContentImage data={MISSION} />
       <Values />
-      <TeamSection data={TEAMS} />
+      <TeamSectionWrapper data={TEAMS} />
     </>
   );
 };

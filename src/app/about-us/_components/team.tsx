@@ -1,4 +1,3 @@
-"use client";
 import { Team } from "@/interfaces/about-us";
 import { DynamicImages } from "@/interfaces/common";
 import Image from "next/image";
@@ -181,13 +180,17 @@ const TeamSection = ({ data }: { data: Team[] }) => {
               {memberImages[team.id] && memberImages[team.id][i] && (
                 <>
                   <div className="relative group rounded-lg overflow-hidden mb-3 sm:mb-6">
-                    <a href="/" target="_blank" className="block w-full h-full">
-                      <Image
-                        src={memberImages[team.id][i]}
-                        alt={`${member.name} DP`}
-                        className="w-full"
-                      />
-                      {member.linkedIn && (
+                    {member.linkedIn ? (
+                      <a
+                        href="/"
+                        target="_blank"
+                        className="block w-full h-full"
+                      >
+                        <Image
+                          src={memberImages[team.id][i]}
+                          alt={`${member.name} DP`}
+                          className="w-full"
+                        />
                         <div className="flex items-center justify-center absolute inset-0 bg-bgPrimary bg-opacity-0 group-hover:bg-opacity-80 transition-opacity duration-300">
                           <div className="text-white font-medium text-xl flex flex-col items-center gap-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                             <span>Connect with me</span>
@@ -198,8 +201,14 @@ const TeamSection = ({ data }: { data: Team[] }) => {
                             />
                           </div>
                         </div>
-                      )}
-                    </a>
+                      </a>
+                    ) : (
+                      <Image
+                        src={memberImages[team.id][i]}
+                        alt={`${member.name} DP`}
+                        className="w-full"
+                      />
+                    )}
                   </div>
                   <div className="text-[#000] font-medium text-lg sm:text-xl leading-[30px] sm:mb-2">
                     {member.name}
