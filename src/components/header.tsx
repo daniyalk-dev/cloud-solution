@@ -60,7 +60,7 @@ const Header: React.FC = () => {
         { label: "design services", href: "/#design-services" },
         { label: "development services", href: "/#development-services" },
         { label: "professional services", href: "/#professional-services" },
-        { label: "it consulting services", href: "/#it-consulting-services" },
+        { label: "IT consulting services", href: "/#it-consulting-services" },
         { label: "managed services", href: "/#managed-services" },
       ],
       image: ServicesImage,

@@ -67,25 +67,26 @@ const Footer = () => {
     {
       label: "our services",
       items: [
-        { label: "cloud services", href: "/cloud-services" },
-        { label: "devops services", href: "/devops-services" },
-        { label: "development services", href: "/dev-services" },
-        { label: "professional services", href: "/professional-services" },
-        { label: "IT consulting services", href: "/it-consulting-services" },
-        { label: "managed services", href: "/managed-services" },
+        { label: "cloud services", href: "/#cloud-services" },
+        { label: "devOps services", href: "/#devops-services" },
+        { label: "design services", href: "/#design-services" },
+        { label: "development services", href: "/#development-services" },
+        { label: "professional services", href: "/#professional-services" },
+        { label: "IT consulting services", href: "/#it-consulting-services" },
+        { label: "managed services", href: "/#managed-services" },
       ],
     },
     {
       label: "about us",
       items: [
-        { label: "vision", href: "/about-vision" },
-        { label: "key values", href: "/key-values" },
-        { label: "team", href: "/about-team" },
+        { label: "vision", href: "/about-us#vision" },
+        { label: "key values", href: "/about-us#key-values" },
+        { label: "team", href: "/about-us?team=executive-team#our-team" },
       ],
     },
     {
       label: "career",
-      items: [{ label: "work culture", href: "/work-culture" }],
+      items: [{ label: "work culture", href: "/about-us#key-values" }],
     },
   ];
 

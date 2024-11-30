@@ -22,7 +22,7 @@ const Intro = () => {
         potential.`}
         </p>
         <div className="flex justify-center my-6 sm:my-12">
-          <CTA_Btn label="careers" href="https://careers.inneed.cloud/" />
+          <CTA_Btn label="careers" href="https://pk.indeed.com/" />
         </div>
       </div>
     </section>
