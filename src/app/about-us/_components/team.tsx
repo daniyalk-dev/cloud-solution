@@ -4,7 +4,6 @@ import { DynamicImages } from "@/interfaces/common";
 import Image from "next/image";
 import { createRef, RefObject, useRef, useState, useEffect } from "react";
 import LinkedInIcon from "@/assets/images/linkedin white.png";
-import useIntersectionObserver from "@/custom-hooks/intersectionObserver";
 import clsx from "clsx";
 
 interface TeamImages {
@@ -22,11 +21,15 @@ const TeamSection = ({ data }: { data: Team[] }) => {
     }, {} as { [key: string]: RefObject<HTMLDivElement>[] })
   );
 
-  const visibilityMap = Object.fromEntries(
-    Object.entries(teamMemberRefs.current).map(([team, refs]) => [
-      team,
-      useIntersectionObserver(refs, true),
-    ])
+  const [visibilityMap, setVisibilityMap] = useState<{
+    [key: string]: boolean[];
+  }>(
+    Object.fromEntries(
+      Object.entries(teamMemberRefs.current).map(([team, refs]) => [
+        team,
+        refs.map(() => false),
+      ])
+    )
   );
 
   useEffect(() => {
@@ -48,10 +51,48 @@ const TeamSection = ({ data }: { data: Team[] }) => {
           });
       });
     });
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        setVisibilityMap((prevVisibilityMap) => {
+          const newVisibilityMap = { ...prevVisibilityMap };
+          entries.forEach((entry) => {
+            for (const key in teamMemberRefs.current) {
+              const index = teamMemberRefs.current[key].findIndex(
+                (ref) => ref.current === entry.target
+              );
+              if (index !== -1) {
+                if (entry.isIntersecting) newVisibilityMap[key][index] = true;
+                return newVisibilityMap;
+              }
+            }
+          });
+          return newVisibilityMap;
+        });
+      },
+      { threshold: 0.5 }
+    );
+
+    for (const key in teamMemberRefs.current) {
+      teamMemberRefs.current[key].forEach((ref) => {
+        if (ref.current) {
+          observer.observe(ref.current);
+        }
+      });
+    }
+
     handleHashChange();
     window.addEventListener("hashchange", handleHashChange);
     return () => {
       window.removeEventListener("hashchange", handleHashChange);
+      for (const key in teamMemberRefs.current) {
+        teamMemberRefs.current[key].forEach((ref) => {
+          if (ref.current) {
+            observer.unobserve(ref.current);
+          }
+        });
+      }
+      observer.disconnect();
     };
   }, [data.length]);
 
