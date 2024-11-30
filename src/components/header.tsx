@@ -77,9 +77,18 @@ const Header: React.FC = () => {
       href: "/about-us",
       submenu: [
         { label: "about inneed", href: "/about-us" },
-        { label: "executive team", href: "/about-us#executive-team" },
-        { label: "advisory team", href: "/about-us#advisory-team" },
-        { label: "technology team", href: "/about-us#technology-team" },
+        {
+          label: "executive team",
+          href: "/about-us?team=executive-team#our-team",
+        },
+        {
+          label: "advisory team",
+          href: "/about-us?team=advisory-team#our-team",
+        },
+        {
+          label: "technology team",
+          href: "/about-us?team=technology-team#our-team",
+        },
       ],
       image: OurTeamImage,
     },

@@ -8,8 +8,8 @@ export interface TitleDescription {
 }
 
 export interface Team {
+    id: string;
     title: string;
-    href: string,
     members: {
         name: string;
         image: string;
