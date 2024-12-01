@@ -9,7 +9,7 @@ const ContactUs = () => {
   const [formState, formAction] = useActionState(contactUsSubmit, {
     success: false,
     errors: null,
-    data: null,
+    payload: null,
   });
 
   const SubmitBtn = () => {
@@ -42,6 +42,7 @@ const ContactUs = () => {
                 id="fullName"
                 name="fullName"
                 type="text"
+                defaultValue={formState.payload?.get("fullName") ?? ""}
                 placeholder="Name"
                 className="text-xs font-light border border-solid border-[#ACACACFF] outline-none rounded-[5px] py-2 pl-5 pr-[15px]"
               />
@@ -57,6 +58,7 @@ const ContactUs = () => {
                 id="email"
                 name="email"
                 type="email"
+                defaultValue={formState.payload?.get("email") ?? ""}
                 placeholder="Email"
                 className="text-xs font-light border border-solid border-[#ACACACFF] outline-none rounded-[5px] py-2 pl-5 pr-[15px]"
               />
@@ -72,6 +74,7 @@ const ContactUs = () => {
                 id="phone"
                 name="phone"
                 type="tel"
+                defaultValue={formState.payload?.get("phone") ?? ""}
                 placeholder="Phone"
                 className="text-xs font-light border border-solid border-[#ACACACFF] outline-none rounded-[5px] py-2 pl-5 pr-[15px]"
               />
@@ -86,6 +89,7 @@ const ContactUs = () => {
               <textarea
                 id="message"
                 name="message"
+                defaultValue={formState.payload?.get("message") ?? ""}
                 rows={4}
                 className="text-xs font-light border border-solid border-[#ACACACFF] outline-none rounded-[5px] py-2 pl-5 pr-[15px] resize-none"
               />

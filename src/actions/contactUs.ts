@@ -4,7 +4,7 @@ import { z } from 'zod';
 interface FormState {
     success: boolean;
     errors?: any;
-    data?: any;
+    payload?: any;
 }
 
 const contactFormSchema = z.object({
@@ -16,10 +16,9 @@ const contactFormSchema = z.object({
 });
 
 export const contactUsSubmit = async (prevState: FormState, formData: FormData): Promise<FormState> => {
-    console.log(Object.fromEntries(formData.entries()));
     const result = contactFormSchema.safeParse(Object.fromEntries(formData.entries()));
     if (!result.success) {
-        return { success: false, errors: result.error.formErrors.fieldErrors };
+        return { success: false, errors: result.error.formErrors.fieldErrors, payload: formData };
     }
-    return { success: true, data: result.data };
+    return { success: true };
 };
