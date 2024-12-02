@@ -1,29 +1,29 @@
 "use client";
 import { contactUsSubmit } from "@/actions/contactUs";
 import ContactUsIcon from "@/assets/images/contact-us.png";
+import { FormErrors, FormState } from "@/interfaces/contact-us";
+import contactFormValidate from "@/utils/contactFormSchema";
 import Image from "next/image";
-import { useActionState } from "react";
-import { useFormStatus } from "react-dom";
+import { useActionState, useState } from "react";
 
 const ContactUs = () => {
-  const [formState, formAction] = useActionState(contactUsSubmit, {
+  const initialState: FormState = {
     success: false,
-    errors: null,
-    payload: null,
-  });
-
-  const SubmitBtn = () => {
-    const { pending } = useFormStatus();
-    return (
-      <button
-        className="bg-[#0A7EE1FF] border-none rounded-[30px] py-[9px] w-full text-white"
-        type="submit"
-        disabled={pending}
-      >
-        {pending ? "Submitting..." : "Submit"}
-      </button>
-    );
   };
+  const [formErrors, setFormErrors] = useState<FormErrors>({});
+  const [formState, formAction, pending] = useActionState(
+    async (state: FormState, payload: FormData) => {
+      const result = contactFormValidate(payload);
+      if (!result.success) {
+        setFormErrors(result.error.formErrors.fieldErrors);
+        return { success: false, payload };
+      } else {
+        await contactUsSubmit(state, payload);
+        return { success: true };
+      }
+    },
+    initialState
+  );
 
   return (
     <section className="container mx-auto px-4 sm:px-8 my-8 sm:my-16 md:my-20">
@@ -42,14 +42,14 @@ const ContactUs = () => {
                 id="fullName"
                 name="fullName"
                 type="text"
-                defaultValue={formState.payload?.get("fullName") ?? ""}
+                defaultValue={
+                  (formState.payload?.get("fullName") as string) ?? ""
+                }
                 placeholder="Name"
                 className="text-xs font-light border border-solid border-[#ACACACFF] outline-none rounded-[5px] py-2 pl-5 pr-[15px]"
               />
-              {formState.errors && formState.errors.fullName && (
-                <div className="text-[#CB3837]">
-                  {formState.errors.fullName[0]}
-                </div>
+              {!formState.success && formErrors.fullName && (
+                <div className="text-[#CB3837]">{formErrors.fullName[0]}</div>
               )}
             </div>
             <div className="flex flex-col mb-4 text-[#2C3345FF] gap-2">
@@ -58,14 +58,12 @@ const ContactUs = () => {
                 id="email"
                 name="email"
                 type="email"
-                defaultValue={formState.payload?.get("email") ?? ""}
+                defaultValue={(formState.payload?.get("email") as string) ?? ""}
                 placeholder="Email"
                 className="text-xs font-light border border-solid border-[#ACACACFF] outline-none rounded-[5px] py-2 pl-5 pr-[15px]"
               />
-              {formState.errors && formState.errors.email && (
-                <div className="text-[#CB3837]">
-                  {formState.errors.email[0]}
-                </div>
+              {!formState.success && formErrors.email && (
+                <div className="text-[#CB3837]">{formErrors.email[0]}</div>
               )}
             </div>
             <div className="flex flex-col mb-4 text-[#2C3345FF] gap-2">
@@ -74,32 +72,36 @@ const ContactUs = () => {
                 id="phone"
                 name="phone"
                 type="tel"
-                defaultValue={formState.payload?.get("phone") ?? ""}
+                defaultValue={(formState.payload?.get("phone") as string) ?? ""}
                 placeholder="Phone"
                 className="text-xs font-light border border-solid border-[#ACACACFF] outline-none rounded-[5px] py-2 pl-5 pr-[15px]"
               />
-              {formState.errors && formState.errors.phone && (
-                <div className="text-[#CB3837]">
-                  {formState.errors.phone[0]}
-                </div>
+              {!formState.success && formErrors.phone && (
+                <div className="text-[#CB3837]">{formErrors.phone[0]}</div>
               )}
             </div>
             <div className="flex flex-col mb-8 text-[#2C3345FF] gap-2">
-              <label htmlFor="full_name">Message</label>
+              <label htmlFor="message">Message</label>
               <textarea
                 id="message"
                 name="message"
-                defaultValue={formState.payload?.get("message") ?? ""}
+                defaultValue={
+                  (formState.payload?.get("message") as string) ?? ""
+                }
                 rows={4}
                 className="text-xs font-light border border-solid border-[#ACACACFF] outline-none rounded-[5px] py-2 pl-5 pr-[15px] resize-none"
               />
-              {formState.errors && formState.errors.message && (
-                <div className="text-[#CB3837]">
-                  {formState.errors.message[0]}
-                </div>
+              {!formState.success && formErrors.message && (
+                <div className="text-[#CB3837]">{formErrors.message[0]}</div>
               )}
             </div>
-            <SubmitBtn />
+            <button
+              className="bg-[#0A7EE1FF] border-none rounded-[30px] py-[9px] w-full text-white"
+              type="submit"
+              disabled={pending}
+            >
+              {pending ? "Submitting..." : "Submit"}
+            </button>
           </form>
         </div>
         <div className="flex justify-center items-start md:items-center">
