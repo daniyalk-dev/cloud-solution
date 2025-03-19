@@ -5,6 +5,7 @@ import { Geist } from "next/font/google";
 import AppContextProvider from "@/components/appContext";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
+import { AuthProvider } from "@/contexts/AuthContext";
 
 const switzer = localFont({
   src: "../assets/fonts/switzer.ttf",
@@ -30,13 +31,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${switzer.variable} ${geist.variable}`}>
-      <AppContextProvider>
-        <body className="antialiased">
-          <Header />
-          <main>{children}</main>
-          <Footer />
-        </body>
-      </AppContextProvider>
+      <AuthProvider>
+        <AppContextProvider>
+          <body className="antialiased">
+            <Header />
+            <main>{children}</main>
+            <Footer />
+          </body>
+        </AppContextProvider>
+      </AuthProvider>
     </html>
   );
 }
