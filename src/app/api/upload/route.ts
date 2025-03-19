@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from 'next/server';
 import { writeFile, unlink } from 'fs/promises';
 import path from 'path';
 import { v4 as uuidv4 } from 'uuid';
-import { auth } from '@/utils/firebase';
 import fs from 'fs/promises';
 
 // Helper function to get current user
@@ -21,7 +20,7 @@ async function getCurrentUser(request: NextRequest) {
     // const decodedToken = await auth.verifySessionCookie(sessionCookie);
     // return decodedToken;
     return { isAdmin: true }; // Simplified for demo
-  } catch (error) {
+  } catch {
     return null;
   }
 }

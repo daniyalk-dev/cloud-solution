@@ -36,13 +36,13 @@ export async function POST(request: NextRequest) {
       message: 'Admin user created successfully',
       uid: userRecord.uid,
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Error creating admin user:', error);
     
     return NextResponse.json(
       { 
         error: 'Failed to create admin user',
-        message: error.message || 'Unknown error' 
+        message: error instanceof Error ? error.message : 'Unknown error' 
       },
       { status: 500 }
     );

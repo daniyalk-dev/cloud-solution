@@ -3,10 +3,12 @@ import { collection, query, where, getDocs, limit } from 'firebase/firestore';
 import { db } from '@/utils/firebase';
 import { PageContent } from '@/types/content';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET(
   request: NextRequest,
   { params }: { params: { slug: string } }
-) {
+): Promise<Response> {
   try {
     const { slug } = params;
 
