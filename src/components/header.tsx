@@ -70,10 +70,6 @@ const Header: React.FC = () => {
       href: "/#projects",
     },
     {
-      label: "blog",
-      href: "/",
-    },
-    {
       label: "about us",
       href: "/about-us",
       submenu: [
@@ -92,16 +88,6 @@ const Header: React.FC = () => {
         },
       ],
       image: OurTeamImage,
-    },
-    {
-      label: "career",
-      href: "https://pk.indeed.com/",
-      external: true,
-    },
-    {
-      label: "aws",
-      href: "https://www.linkedin.com/company/amazon-web-services/",
-      external: true,
     },
   ];
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
