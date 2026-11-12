@@ -2,7 +2,7 @@
 
 A multi-page marketing site for a fictional cloud provider, built as a personal Next.js practice project in late 2024. The copy, testimonials and client logos are sample content, not real clients.
 
-**Live:** https://cloud-solution-tau.vercel.app
+**Live:** https://cloud-solution-dkcent4s-projects.vercel.app
 
 ## What's in it
 
